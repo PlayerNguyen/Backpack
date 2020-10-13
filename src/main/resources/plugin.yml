@@ -1,0 +1,10 @@
+name: Backpack
+version: '1.0-SNAPSHOT'
+main: com.github.playernguyen.backpack.Backpack
+authors: [ Player_Nguyen ]
+description: Backpack plugins
+commands:
+  backpack:
+    usage: /backpack command
+    description: A backpack plugin commands
+    aliases: [bp, backpack]

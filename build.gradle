@@ -1,0 +1,55 @@
+//import org.apache.tools.ant.filters.ReplaceTokens
+
+apply plugin: 'java'
+
+group = 'com.github.playernguyen'
+version = '1.0-SNAPSHOT'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        name = 'jitpack'
+        url 'https://jitpack.io'
+    }
+    maven { url "https://repo.dmulloy2.net/nexus/repository/public/" }
+}
+
+dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+//    implementation 'junit:junit:4.12'
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.5.1";
+//    compile 'com.github.PlayerNguyen:PlayerNguyenCore:1.0'
+    compileOnly files('library/1.12.jar')
+    compile files("library/PlayerNguyenCore-1.0.jar")
+}
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': version,
+                'Main-Class': 'com.mkyong.DateUtils'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+
+//processResources {
+//    from(sourceSets.main.resources.srcDirs) {
+//        filter ReplaceTokens, tokens: [version: version]
+//    }
+//}
